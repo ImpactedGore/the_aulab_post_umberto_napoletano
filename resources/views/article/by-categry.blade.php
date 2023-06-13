@@ -1,21 +1,10 @@
 <x-layout>
-    <div class="container-fluid p-5 bg-dark bg-gradient text-center text-white">
-        <div class="row justify-content-center">
-            <div class="display-1">
-                <h1>The Aulab Post Umberto Napoletano</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1>Lista degli articoli per la categoria</h1>
             </div>
         </div>
-    </div>
-
-    <div>
-        @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{session('status')}}
-        </div>
-        @endif
-    </div>
-
-    <div class="container mt-5">
         <div class="row">
             @foreach ($articles as $article)
             <div class="card" style="width: 18rem;">
@@ -24,7 +13,6 @@
                     <h5 class="card-title">{{$article->title}}</h5>
                     <p class="card-text">{{$article->subtitle}}</p>
                     <p class="small text-muted">Redatto da {{$article->user->name}}</p>
-                    <a class="small text-muted" href="{{route('article.byCategory',['category'=>$article->category->id])}}" style="text-decoration: none">{{$article->category->name}}</a>
                     <p class="small text-muted">Il {{$article->created_at->format('d/m/y')}}</p>
                     <a href="{{route('article.show',compact('article'))}}" class="btn btn-primary">Leggi</a>
                 </div>
