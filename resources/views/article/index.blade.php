@@ -13,7 +13,11 @@
                     <h5 class="card-title">{{$article->title}}</h5>
                     <p class="card-text">{{$article->subtitle}}</p>
                     <p class="small text-muted">Redatto da {{$article->user->name}}</p>
-                    <a class="small text-muted" href="{{route('article.byCategory',['category'=>$article->category->id])}}" style="text-decoration: none">{{$article->category->name}}</a>           
+                    @if ($article->category)
+                    <a class="small text-muted" href="{{route('article.byCategory',['category'=>$article->category->id])}}" style="text-decoration: none">{{$article->category->name}}</a>
+                    @else
+                    <p class="small text-muted">Articolo senza categoria</p>
+                    @endif
                     <p class="small text-muted">Il {{$article->created_at->format('d/m/y')}}</p>
                     <a href="{{route('article.show',compact('article'))}}" class="btn btn-primary">Leggi</a>
                 </div>

@@ -49,7 +49,13 @@
         @enderror
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+        <label for="exampleInputBody1" class="form-label"> Tags : </label>
+        <input type="text" name="tags" value="{{old('tags')}}" class="form-control">
+        <span>Inserisci i tags separati da virgola</span>
+    </div>   
+
+    <button type= "submit" class="btn btn-primary">Submit</button>
     </form>
 
 </x-layout>

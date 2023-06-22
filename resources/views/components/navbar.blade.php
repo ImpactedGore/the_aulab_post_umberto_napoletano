@@ -43,8 +43,15 @@
             {{Auth::user()->name}}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{{route('careers')}}">Lavora con noi</a></li>
+            @if (Auth::user()->is_admin)
+              <li><a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard Admin</a></li>
+            @endif
+                  
+            @if (Auth::user()->is_revisor)
+              <li><a class="dropdown-item" href="{{route('revisor.dashboard')}}">Dashboard Revisor</a></li>
+            @endif            
+
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#"
             onclick="
@@ -65,9 +72,9 @@
       </ul>
 
 
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form method="GET" action="{{route('article.search')}}" class="d-flex" role="search">
+        <input class="form-control me-2" name="query" type="search" placeholder="Cosa stai cercando?" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Cerca</button>
       </form>
     </div>
   </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,14 +12,14 @@ class ArticleController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth')->except(['index','show']);
+        $this->middleware('auth')->except(['index','show','search']);
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $articles=Article::orderBy('created_at','desc')->get();
+        $articles=Article::where('is_accepted',true)->orderBy('created_at','desc')->get();
         return view('article.index',compact('articles'));
     }
 
@@ -43,7 +45,7 @@ class ArticleController extends Controller
             'category' => 'required',
         ]);
 
-        Article::create([
+        $article = Article::create([
             'title' => $request->title,
             'subtitle' => $request->subtitle,
             'body' => $request->body,
@@ -51,6 +53,16 @@ class ArticleController extends Controller
             'user_id' => Auth::user()->id,
             'category_id' => $request->category
         ]);
+
+        $tags = explode(',',$request->tags);
+        foreach($tags as $tag){
+            $newTag = Tag::updateOrCreate([
+                'name' => $tag,
+            ]);
+
+            $article->tags()->attach($newTag);
+        }
+
 
         return redirect (route('welcome'))->with('status','Articolo inserito correttamente');
     }
@@ -88,7 +100,16 @@ class ArticleController extends Controller
     }
 
     public function byCategory(Category $category){
-        $articles = $category->articles->sortBy('created_at');
+        $articles = $category->articles->sortBy('created_at')->filter(function($article){
+            return $article->is_accepted == true;
+        });
         return view('article.by-category',compact('articles'));
+    }
+
+    public function search(Request $request){
+        $query = $request->input('query');
+        $articles = Article::search($query)->where('is_accepted',true)->orderBy('created_at','desc')->get();
+
+        return view('article.search-index',compact('articles','query'));
     }
 }
