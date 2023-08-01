@@ -27,4 +27,5 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
+    <a href="{{url('auth/google')}}">Login with google</a>
 </x-layout>

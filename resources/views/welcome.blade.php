@@ -23,6 +23,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$article->title}}</h5>
                     <p class="card-text">{{$article->subtitle}}</p>
+                    <p class="small text-muted">Tempo di lettura : {{$article->readDuration()}} min</p>
                     <p class="small text-muted">Redatto da {{$article->user->name}}</p>
                     @if ($article->category)
                     <a class="small text-muted" href="{{route('article.byCategory',['category'=>$article->category->id])}}" style="text-decoration: none">{{$article->category->name}}</a>

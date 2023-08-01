@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Article extends Model
 {
     use HasFactory,Searchable;
-    protected $fillable = ['title','body','subtitle','image','user_id','category_id','is_accepted'];
+    protected $fillable = ['title','slug','body','subtitle','image','user_id','category_id','is_accepted'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -31,5 +31,15 @@ class Article extends Model
             'category' => $this->category,
             'subtitle' => $this->subtitle
         ];
+    }
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+    public function readDuration(){
+        $totalWords = str_word_count($this->body);
+        $minusToRead = round($totalWords/200);
+        return intval($minusToRead);
     }
 }

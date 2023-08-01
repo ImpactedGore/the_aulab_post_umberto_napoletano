@@ -17,7 +17,7 @@
         <td>@{{$article->user->name}}</td>
         <td>
             @if(is_null($article->is_accepted))
-                <a href="{{route('article.show',compact('article')}}" class="btn btn-info text-white">Leggi articolo</a>
+                <a href="{{route('article.show',compact('article'))}}" class="btn btn-info text-white">Leggi articolo</a>
                 <a href="{{route('revisor.acceptArticle',compact('article'))}}" class="btn btn-success text-white">Accetta articolo</a>
                 <a href="{{route('revisor.rejectArticle',compact('article'))}}" class="btn btn-danger text-white">Rifiuta articolo</a>
             @else
