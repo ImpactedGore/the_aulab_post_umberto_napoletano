@@ -1,6 +1,6 @@
 <x-layout>
 
-    <form action="{{route('article.update', compact('article')}}" method="POST" class="m-5" enctype="multipart/form-data">
+    <form action="{{route('article.update', compact('article'))}}" method="POST" class="m-5" enctype="multipart/form-data">
         @csrf
         @method('PUT')
     <div class="mb-3">
